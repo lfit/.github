@@ -76,7 +76,7 @@ jobs:
       - name: Check repo name
         id: repo-name
         env:
-          TARGET_REPO: ${{ vars.TARGET_REPO }}
+          TARGET_REPO: ${{ inputs.TARGET_REPO }}
         run: |
           if [[ "${TARGET_REPO}" == puppet-* ]]; then
             echo "VALIDATE=true" >> "$GITHUB_OUTPUT"
