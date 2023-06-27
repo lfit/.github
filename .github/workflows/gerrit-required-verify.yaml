@@ -78,7 +78,7 @@ jobs:
         env:
           TARGET_REPO: ${{ inputs.TARGET_REPO }}
         run: |
-          if [[ "${TARGET_REPO}" == puppet-* ]]; then
+          if [[ "${TARGET_REPO}" == "lfit/puppet-"* ]]; then
             echo "VALIDATE=true" >> "$GITHUB_OUTPUT"
           else
             echo "VALIDATE=false" >> "$GITHUB_OUTPUT"
