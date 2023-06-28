@@ -134,7 +134,8 @@ jobs:
           TRUST_ANCHORS="${{ vars.TRUST_ANCHORS }}"
           for i in ${TRUST_ANCHORS}
           do
-            echo "${i}:6:" >> "${OWNERTRUST}"
+            owner=$(echo "${i}" | tr -d '[:space:]')
+            echo "${owner}:6:" >> "${OWNERTRUST}"
           done
           cat "${OWNERTRUST}"
           gpg --import-ownertrust "${OWNERTRUST}"
