@@ -136,6 +136,7 @@ jobs:
           do
             echo "${i}:6:" >> "${OWNERTRUST}"
           done
+          cat "${OWNERTRUST}"
           gpg --import-ownertrust "${OWNERTRUST}"
           rm "${OWNERTRUST}"
       - name: Verify Commit Signature
