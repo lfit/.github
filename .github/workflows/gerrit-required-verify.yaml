@@ -127,7 +127,40 @@ jobs:
         shell: bash
         run: |
           rm -rf .password-store
-
+      - name: Setup Trust Anchors
+        shell: bash
+        run: |
+          OWNERTRUST=$(mktemp)
+          TRUST_ANCHORS="${{ vars.TRUST_ANCHORS }}"
+          for i in ${TRUST_ANCHORS}
+          do
+            echo "${i}:6:" >> "${OWNERTRUST}"
+          done
+          gpg --import-ownertrust "${OWNERTRUST}"
+          rm "${OWNERTRUST}"
+      - name: Verify Commit Signature
+        shell: bash
+        run: |
+          if VERIFY=$(git verify-commit --raw HEAD 2>&1)
+          then
+            COUNT=$(echo "${VERIFY}" | \
+              grep -c -E '^\[GNUPG:\] (GOODSIG|VALIDSIG|TRUST_FULLY|TRUST_ULTIMATE)')
+            if [ "${COUNT}" -eq "3" ]
+            then
+              echo "Trusted signature found"
+            else
+              echo "ERROR: PGP Signature does not pass validation"
+              exit 1
+            fi
+          else
+            echo "ERROR: PGP signature missing or not trusted"
+            exit 1
+          fi
+      - name: Cleanup GNUPGHOME
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          rm -rf "${GNUPGHOME}"
 
   vote:
     if: ${{ always() }}
