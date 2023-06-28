@@ -97,6 +97,7 @@ jobs:
           delay: "0s"
           repository: ${{ inputs.TARGET_REPO }}
           ref: refs/heads/${{ inputs.GERRIT_BRANCH }}
+          token: ${{ secrets.REPLICATION_TOKEN }}
       - name: Show log
         run: |
           git log -n1
