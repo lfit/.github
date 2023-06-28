@@ -98,10 +98,36 @@ jobs:
           repository: ${{ inputs.TARGET_REPO }}
           ref: refs/heads/${{ inputs.GERRIT_BRANCH }}
           token: ${{ secrets.REPLICATION_TOKEN }}
-      - name: Show log
-        run: |
-          git log -n1
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2.5.1
+        with:
+          key: ${{ secrets.LFIT_GERRIT_SSH_REQUIRED_PRIVKEY }}
+          known_hosts: ${{ vars.LFIT_GERRIT_KNOWN_HOSTS }}
+          config: |
+            Host ${{ vars.LFIT_GERRIT_SERVER }}
+              User ${{ vars.LFIT_GERRIT_SSH_REQUIRED_USER }}
+              Port 29418
+              PubkeyAcceptedKeyTypes +ssh-rsa
+              IdentityFile ~/.ssh/id_rsa
+      - name: Clone gpg key repo
         shell: bash
+        run: |
+          CLONE_URL="ssh://${{ vars.LFIT_GERRIT_SERVER }}/password-store.git"
+          git clone "${CLONE_URL}" .password-store --depth 1
+      - name: Setup GNUPGHOME
+        shell: bash
+        run: |
+          GNUPGHOME=$(mktemp -d)
+          echo "GNUPGHOME=${GNUPGHOME}" >> "$GITHUB_ENV"
+      - name: Import keys
+        shell: bash
+        run: |
+          gpg --import .password-store/.gpg-keys/*.asc
+      - name: Cleanup gpg key repo
+        shell: bash
+        run: |
+          rm -rf .password-store
+
 
   vote:
     if: ${{ always() }}
