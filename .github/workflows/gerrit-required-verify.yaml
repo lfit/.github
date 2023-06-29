@@ -79,7 +79,8 @@ jobs:
           TARGET_REPO: ${{ inputs.TARGET_REPO }}
         run: |
           if [[ "${TARGET_REPO}" == "lfit/puppet-"* || \
-                "${TARGET_REPO}" == "lfit/lfcore-"* ]]; then
+                "${TARGET_REPO}" == "lfit/lfcore-"* || \
+                "${TARGET_REPO}" == "lfit/ci-management" ]]; then
             echo "VALIDATE=true" >> "$GITHUB_OUTPUT"
           else
             echo "VALIDATE=false" >> "$GITHUB_OUTPUT"
