@@ -142,6 +142,7 @@ jobs:
           cat "${OWNERTRUST}"
           gpg --import-ownertrust "${OWNERTRUST}"
           rm "${OWNERTRUST}"
+          gpg --check-trustdb
       - name: Verify Commit Signature
         shell: bash
         run: |
