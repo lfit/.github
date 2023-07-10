@@ -154,10 +154,16 @@ jobs:
               echo "Trusted signature found"
             else
               echo "ERROR: PGP Signature does not pass validation"
+              echo
+              echo "VERIFY is:"
+              echo "${VERIFY}"
               exit 1
             fi
           else
             echo "ERROR: PGP signature missing or not trusted"
+              echo
+              echo "VERIFY is:"
+              echo "${VERIFY}"
             exit 1
           fi
       - name: Cleanup GNUPGHOME
