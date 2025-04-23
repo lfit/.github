@@ -142,7 +142,9 @@ jobs:
           cat "${OWNERTRUST}"
           gpg --import-ownertrust "${OWNERTRUST}"
           rm "${OWNERTRUST}"
-          gpg --check-trustdb
+          # The key for agrimberg is causing weird issues which forces
+          # us to allow weak key signatures
+          gpg --check-trustdb --allow-weak-key-signatures
       - name: Verify Commit Signature
         shell: bash
         run: |
