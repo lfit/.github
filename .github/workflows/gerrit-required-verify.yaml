@@ -145,6 +145,8 @@ jobs:
           # The key for agrimberg is causing weird issues which forces
           # us to allow weak key signatures
           gpg --check-trustdb --allow-weak-key-signatures
+          gpg --list-keys --with-colons
+          gpg --version
       - name: Verify Commit Signature
         shell: bash
         run: |
