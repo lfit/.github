@@ -93,7 +93,7 @@ jobs:
     if: needs.needs-validate.outputs.validate == 'true'
     steps:
       - name: Checkout change
-        uses: lfreleng-actions/checkout-gerrit-change-action@a42e7b28e20da2644d2c5d90f1294d0634a71d9c # v1.0.0
+        uses: lfreleng-actions/checkout-gerrit-change-action@8523d768952d9690702b4696a8310d2a84b1be39 # v1.0.1
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           delay: "0s"
@@ -184,7 +184,7 @@ jobs:
     steps:
       - name: Get workflow conclusion
         # yamllint disable-line rule:line-length
-        uses: im-open/workflow-conclusion@e4f7c4980600fbe0818173e30931d3550801b992  # v2.2.3
+        uses: im-open/workflow-conclusion@7b146947e59eaf7fc3328822357861ab1758c088  # v2.2.5
       - name: Set vote
         uses: lfit/gerrit-review-action@6d2e00dfd3173cd9a36d11350c8fba44731c7b4e # v0.10.0
         with:
