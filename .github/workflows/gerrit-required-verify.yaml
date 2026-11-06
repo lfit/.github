@@ -93,7 +93,7 @@ jobs:
     if: needs.needs-validate.outputs.validate == 'true'
     steps:
       - name: Checkout change
-        uses: lfreleng-actions/checkout-gerrit-change-action@f87b90a3370e62dad310797fedc7fd3700c75832 # v1.0.2
+        uses: lfreleng-actions/checkout-gerrit-change-action@7c4a868e1f8e82a27948748eeda306d8e8c117db # v1.3.0
         with:
           gerrit-refspec: ${{ inputs.GERRIT_REFSPEC }}
           delay: "0s"
